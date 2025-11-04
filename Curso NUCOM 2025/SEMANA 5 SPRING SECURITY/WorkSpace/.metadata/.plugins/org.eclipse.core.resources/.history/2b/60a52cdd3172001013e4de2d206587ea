@@ -1,0 +1,5 @@
+package com.mx.SpringSecurity.Controller;
+
+public class Contacto {
+
+}

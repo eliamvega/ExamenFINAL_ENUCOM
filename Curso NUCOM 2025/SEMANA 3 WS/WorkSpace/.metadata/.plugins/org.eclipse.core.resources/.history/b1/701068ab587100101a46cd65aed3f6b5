@@ -1,0 +1,5 @@
+package com.mx.UsuarioService.Repository;
+
+public interface IMetodos {
+
+}

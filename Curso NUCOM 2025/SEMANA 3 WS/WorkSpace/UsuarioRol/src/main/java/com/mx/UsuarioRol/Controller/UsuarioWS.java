@@ -1,0 +1,71 @@
+package com.mx.UsuarioRol.Controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
+
+import com.mx.UsuarioRol.Dominio.Usuario;
+import com.mx.UsuarioRol.Service.UsuarioServiceImp;
+
+@RestController
+@RequestMapping(path = "api/usuario")
+@CrossOrigin(origins = "http://localhost:4200") 
+public class UsuarioWS {
+
+    @Autowired
+    private UsuarioServiceImp service;
+
+    @GetMapping("/listar")
+    public ResponseEntity<List<Usuario>> listar() {
+        List<Usuario> usuarios = service.listar();
+        return usuarios.isEmpty()
+            ? ResponseEntity.noContent().build()
+            : ResponseEntity.ok(usuarios);
+    }
+
+    @PostMapping("/guardar")
+    public ResponseEntity<String> guardar(@RequestBody Usuario u) {
+        try {
+            service.guardar(u);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body("Usuario creado con éxito."); // solo texto
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Error al crear usuario: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/editar")
+    public ResponseEntity<String> editar(@RequestBody Usuario u) {
+        Usuario existente = service.buscar(u);
+        if (existente == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("No existe el usuario con ID: " + u.getIdUsuario());
+        }
+        service.editar(u);
+        return ResponseEntity.ok("Usuario actualizado: " + u.getIdUsuario());
+    }
+
+    @DeleteMapping("/eliminar")
+    public ResponseEntity<String> eliminar(@RequestBody Usuario usuario) {
+        Usuario encontrado = service.buscar(usuario);
+        if (encontrado != null) {
+            service.eliminar(encontrado);
+            return ResponseEntity.ok("Usuario eliminado: " + usuario.getIdUsuario());
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body("No se encontró usuario con ID: " + usuario.getIdUsuario());
+    }
+
+    @PostMapping("/buscar")
+    public ResponseEntity<?> buscar(@RequestBody Usuario usuario) {
+        Usuario encontrado = service.buscar(usuario);
+        if (encontrado == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("No se encontró usuario con ID: " + usuario.getIdUsuario());
+        }
+        return ResponseEntity.ok(encontrado);
+    }
+}

@@ -1,0 +1,10 @@
+package com.mx.RolService.Repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.mx.RolService.Dominio.Rol;
+
+public interface IRolRepository extends JpaRepository<Rol, Integer> {
+	Rol findByPrivilegio(String privilegio); // Método para buscar por privilegio
+}
+

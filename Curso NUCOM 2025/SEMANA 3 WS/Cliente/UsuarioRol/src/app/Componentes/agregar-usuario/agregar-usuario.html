@@ -1,0 +1,82 @@
+<h2>Agregar Nuevo Usuario</h2>
+
+<form #f="ngForm" (ngSubmit)="guardarUsuario()">
+
+  <!-- Nombre -->
+  <div>
+    <label>Nombre:</label>
+    <input type="text" name="nombre" [(ngModel)]="usuario.nombre"
+           (input)="generarCorreo()"
+           pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" required />
+    <div *ngIf="f.submitted && f.controls['nombre']?.invalid">
+      <small *ngIf="f.controls['nombre']?.errors?.['required']">El nombre es obligatorio.</small>
+      <small *ngIf="f.controls['nombre']?.errors?.['pattern']">Solo letras permitidas.</small>
+    </div>
+  </div>
+
+  <!-- Apellido Paterno -->
+  <div>
+    <label>Apellido Paterno:</label>
+    <input type="text" name="app" [(ngModel)]="usuario.app"
+           (input)="generarCorreo()"
+           pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" required />
+    <div *ngIf="f.submitted && f.controls['app']?.invalid">
+      <small *ngIf="f.controls['app']?.errors?.['required']">El apellido paterno es obligatorio.</small>
+      <small *ngIf="f.controls['app']?.errors?.['pattern']">Solo letras permitidas.</small>
+    </div>
+  </div>
+
+  <!-- Apellido Materno -->
+  <div>
+    <label>Apellido Materno:</label>
+    <input type="text" name="apm" [(ngModel)]="usuario.apm"
+           pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" />
+    <div *ngIf="f.submitted && f.controls['apm']?.invalid">
+      <small *ngIf="f.controls['apm']?.errors?.['pattern']">Solo letras permitidas.</small>
+    </div>
+  </div>
+
+  <!-- Sexo -->
+  <div>
+    <label>Sexo:</label>
+    <select name="sexo" [(ngModel)]="usuario.sexo" required>
+      <option value="">Seleccione</option>
+      <option value="M">Masculino</option>
+      <option value="F">Femenino</option>
+    </select>
+    <div *ngIf="f.submitted && f.controls['sexo']?.invalid">
+      <small>El sexo es obligatorio.</small>
+    </div>
+  </div>
+
+  <!-- Correo (readonly) -->
+  <div>
+    <label>Correo:</label>
+    <input type="email" name="correo" [(ngModel)]="usuario.correo" readonly />
+  </div>
+
+  <!-- Fecha de Nacimiento -->
+  <div>
+    <label>Fecha de Nacimiento:</label>
+    <input type="date" name="fechaNacimiento" [(ngModel)]="usuario.fechaNacimiento" required />
+    <div *ngIf="f.submitted && f.controls['fechaNacimiento']?.invalid">
+      <small>La fecha de nacimiento es obligatoria.</small>
+    </div>
+  </div>
+
+  <!-- Rol -->
+  <div>
+    <label>Rol:</label>
+    <select name="rol" [(ngModel)]="usuario.rol.rolId" required>
+      <option value="">Seleccione un rol</option>
+      <option *ngFor="let r of roles" [value]="r.rolId">{{ r.privilegio }}</option>
+    </select>
+    <div *ngIf="f.submitted && f.controls['rol']?.invalid">
+      <small>El rol es obligatorio.</small>
+    </div>
+  </div>
+
+  <!-- Botón -->
+  <button type="submit" [disabled]="!f.form.valid">Guardar Usuario</button>
+
+</form>

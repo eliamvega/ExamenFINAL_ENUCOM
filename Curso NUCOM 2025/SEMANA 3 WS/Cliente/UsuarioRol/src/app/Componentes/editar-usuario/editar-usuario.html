@@ -1,0 +1,39 @@
+<h2>Editar Usuario</h2>
+
+<form #formU="ngForm" (ngSubmit)="actualizarUsuario()">
+  <div>
+    <label>Nombre:</label>
+    <input type="text" name="nombre" [(ngModel)]="usuario.nombre" required>
+  </div>
+
+  <div>
+    <label>Apellido Paterno:</label>
+    <input type="text" name="app" [(ngModel)]="usuario.app" required>
+  </div>
+
+  <div>
+    <label>Apellido Materno:</label>
+    <input type="text" name="apm" [(ngModel)]="usuario.apm">
+  </div>
+
+  <div>
+    <label>Sexo:</label>
+    <select name="sexo" [(ngModel)]="usuario.sexo" required>
+      <option value="">Seleccione</option>
+      <option value="M">Masculino</option>
+      <option value="F">Femenino</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Correo:</label>
+    <input type="email" name="correo" [(ngModel)]="usuario.correo" required>
+  </div>
+
+  <div>
+    <label>Fecha de Nacimiento:</label>
+    <input type="date" name="fechaNacimiento" [(ngModel)]="usuario.fechaNacimiento" required>
+  </div>
+
+  <button type="submit" [disabled]="!formU.valid">Actualizar Usuario</button>
+</form>

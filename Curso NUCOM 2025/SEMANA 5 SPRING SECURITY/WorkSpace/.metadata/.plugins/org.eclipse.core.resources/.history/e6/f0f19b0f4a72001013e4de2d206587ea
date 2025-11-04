@@ -1,0 +1,20 @@
+spring.application.name=Bicicleta
+
+#Configuracion puerto
+server.port=8000
+
+#CONEXION A BASE DE DATOS
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521/xe
+spring.datasource.username=ORCL
+spring.datasource.password=Curso2025
+spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+spring.jpa.database=ORACLE
+spring.jpa.database-plataform=org.hibernate.dialect.OracleDialect
+spring.jpa.properties.hibernate.format-sql=true
+
+
+#usuario y contrasenia
+
+spring.security.user.name=eliam
+spring.security.user.password=enucom
+spring.security.user.roles=ADMIIN

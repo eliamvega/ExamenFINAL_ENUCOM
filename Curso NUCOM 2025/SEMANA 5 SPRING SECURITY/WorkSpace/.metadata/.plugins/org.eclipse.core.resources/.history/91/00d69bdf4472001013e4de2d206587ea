@@ -1,0 +1,9 @@
+spring.application.name=SpringSecurity
+
+
+server.port= 8020
+#usuario y contrasenia
+
+#spring.security.user.name=eliam
+spring.security.user.password=enucom
+spring.security.user.roles=ADMIN

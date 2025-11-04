@@ -1,0 +1,127 @@
+package com.mx.Categoria.Controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
+
+
+import com.mx.Categoria.Domain.Categoria;
+import com.mx.Categoria.Entidad.Videojuego;
+import com.mx.Categoria.Service.CategoriaServiceImpl;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+
+@RestController
+@RequestMapping("/categoria")  
+@CrossOrigin("*")   
+@Tag(name = "Categoria de videojuegos")
+public class CategoriaWS {
+
+    @Autowired
+    private CategoriaServiceImpl service;
+
+    //  GET http://localhost:8011/categoria
+    @Operation(summary = "Categotia de videojuego", description = "Lista las categorias de videojuegos existentes mediante un id" )
+    @GetMapping
+    public ResponseEntity<List<Categoria>> listar() {
+        List<Categoria> categorias = service.mostrar();
+        if (categorias.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(categorias);
+    }
+
+    // URI: POST http://localhost:8011/categoria
+    // Crea una nueva categoría 
+    @PostMapping
+    public ResponseEntity<?> guardar(@RequestBody Categoria c) {
+        if (c.getIdCategoria() == null) {
+            return ResponseEntity.badRequest().body("{\"mensaje\":\"ID es obligatorio\"}");
+        }
+        if (service.buscar(c.getIdCategoria()) != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("{\"mensaje\":\"ID ya existe.\"}");
+        }
+        if (c.getNombre() == null || c.getNombre().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("{\"mensaje\":\"Nombre es obligatorio.\"}");
+        }
+        if (service.buscarPorNombre(c.getNombre()) != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("{\"mensaje\":\"Nombre ya existe.\"}");
+        }
+        service.guardar(c);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("{\"mensaje\":\"Categoría creada correctamente.\"}");
+    }
+
+    // URI: GET http://localhost:8011/categoria/{id}
+    // Buscar categoría por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<?> buscarPorId(@PathVariable Integer id) {
+        Categoria cat = service.buscar(id);
+        if (cat == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"mensaje\":\"Categoría no encontrada.\"}");
+        }
+        return ResponseEntity.ok(cat);
+    }
+
+    // URI: PUT http://localhost:8011/categoria
+    // Actualiza categoría existente, valida que nombre no esté duplicado excepto el mismo registro
+    @PutMapping
+    public ResponseEntity<?> editar(@RequestBody Categoria c) {
+        if (c.getIdCategoria() == null || service.buscar(c.getIdCategoria()) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"mensaje\":\"Categoría no encontrada para actualizar.\"}");
+        }
+        if (c.getNombre() == null || c.getNombre().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("{\"mensaje\":\"Nombre es obligatorio.\"}");
+        }
+        Categoria catExistente = service.buscarPorNombre(c.getNombre());
+        if (catExistente != null && !catExistente.getIdCategoria().equals(c.getIdCategoria())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("{\"mensaje\":\"El nombre de la categoría ya existe.\"}");
+        }
+        service.editar(c);
+        return ResponseEntity.ok("{\"mensaje\":\"Categoría actualizada correctamente.\"}");
+    }
+
+    // URI: DELETE http://localhost:8011/categoria/{id}
+    // Elimina categoría por ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Integer id) {
+        Categoria cat = service.buscar(id);
+        if (cat == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"mensaje\":\"Categoría no encontrada para eliminar.\"}");
+        }
+        service.eliminar(cat);
+        return ResponseEntity.noContent().build();
+    }
+
+    // URI: GET http://localhost:8011/categoria/genero/{genero}
+    // Lista categorías filtradas por género (insensible a mayúsculas)
+    @GetMapping("/genero/{genero}")
+    public ResponseEntity<List<Categoria>> porGenero(@PathVariable String genero) {
+        List<Categoria> categorias = service.buscarPorGenero(genero);
+        if (categorias.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(categorias);
+    }
+    
+   
+//http://localhost:8011/categoria/videojuegos/
+    @GetMapping("/videojuegos/{categoriaId}")
+    public ResponseEntity<?> videojuegosPorCategoria(@PathVariable int categoriaId) {
+        List<Videojuego> lista = service.trearVideojuegos(categoriaId);
+        if (lista.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(lista);
+    }
+}

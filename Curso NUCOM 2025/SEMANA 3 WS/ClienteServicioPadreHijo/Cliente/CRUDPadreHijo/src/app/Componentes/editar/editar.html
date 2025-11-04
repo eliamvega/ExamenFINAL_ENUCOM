@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h4>EDITAR PADRE</h4>
+    </div>
+
+    <div class="card-body">
+      <!-- Campo ID -->
+      <label for="idPadre">ID</label>
+      <input type="text" class="form-control" id="idPadre" name="idPadre" placeholder="Escribe el nuevo ID" [(ngModel)]= "padre.idPadre" readonly>
+
+      <!-- Campo Nombre -->
+      <label for="nombre" class="mt-3">Nombre</label>
+      <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Escribe el nombre" [(ngModel)]="padre.nombre">
+
+      <!-- Campo Apellido -->
+      <label for="apellido" class="mt-3">Apellido</label>
+      <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Escribe el apellido" [(ngModel)]="padre.apellido">
+
+      <!-- Campo Edad -->
+      <label for="edad" class="mt-3">Edad</label>
+      <input type="number" class="form-control" id="edad" name="edad" placeholder="Escribe la edad" [(ngModel)]="padre.edad">
+
+      <!-- Campo Trabajo -->
+      <label for="trabajo" class="mt-3">Trabajo</label>
+      <input type="text" class="form-control" id="trabajo" name="trabajo" placeholder="Escribe el trabajo" [(ngModel)]="padre.trabajo">
+    </div>
+
+    <div class="card-footer text-center">
+  <button class="btn btn-outline-warning" (click)="editar()">ACTUALIZAR</button>
+</div>
+
+  </div>
+</div>

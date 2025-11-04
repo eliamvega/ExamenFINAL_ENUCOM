@@ -1,0 +1,20 @@
+spring.application.name=Accesorio
+server.port=8013
+
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format-sql=true
+
+eureka.instance.hostname=localhost
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+
+# acceso a base de datos embebida con almacenamiento en DISCO
+spring.datasource.url=jdbc:h2:C:/Users/ElSipha/Documents/Accesorio/Accesoriobd
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=ORCL
+spring.datasource.password=Curso2025
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.jpa.hibernate.ddl-auto=update
+
+# H2 Web Console
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console

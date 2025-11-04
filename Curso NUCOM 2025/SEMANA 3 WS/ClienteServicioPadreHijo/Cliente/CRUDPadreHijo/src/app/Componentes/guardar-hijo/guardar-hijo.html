@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h4>Formulario de Hijo</h4>
+    </div>
+
+    <div class="card-body">
+      <!-- Campo ID -->
+      <label for="idHijo">ID</label>
+      <input type="text" class="form-control" id="idHijo" [(ngModel)]="hijo.idHijo" placeholder="Escribe el ID">
+
+      <!-- Campo Nombre -->
+      <label for="nombre" class="mt-3">Nombre</label>
+      <input type="text" class="form-control" id="nombre" [(ngModel)]="hijo.nombre" placeholder="Escribe el nombre">
+
+      <!-- Campo Apellido -->
+      <label for="apellido" class="mt-3">Apellido</label>
+      <input type="text" class="form-control" id="apellido" [(ngModel)]="hijo.apellido" placeholder="Escribe el apellido">
+
+      <!-- Campo Edad -->
+      <label for="edad" class="mt-3">Edad</label>
+      <input type="number" class="form-control" id="edad" [(ngModel)]="hijo.edad" placeholder="Escribe la edad">
+
+      <!-- Campo Hobbie -->
+      <label for="hobbie" class="mt-3">Hobbie</label>
+      <input type="text" class="form-control" id="hobbie" [(ngModel)]="hijo.hobbie" placeholder="Escribe el hobbie">
+
+       <!-- Selección del Padre -->
+      <label for="padre" class="mt-3">Padre</label>
+      <select class="form-control" id="padre" [(ngModel)]="hijo.padreId">
+        <option *ngFor="let p of padres" [ngValue]="p">{{ p.nombre }} {{ p.apellido }}</option>
+      </select>
+    
+    </div>
+
+    <div class="card-footer text-center">
+      <button class="btn btn-outline-success" (click)="guardar()">GUARDAR</button>
+    </div>
+  </div>
+</div>

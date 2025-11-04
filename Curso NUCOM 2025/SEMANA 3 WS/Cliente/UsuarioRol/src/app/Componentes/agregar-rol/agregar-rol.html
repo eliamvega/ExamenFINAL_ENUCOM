@@ -1,0 +1,23 @@
+<h3>Agregar Nuevo Rol</h3>
+
+<form (ngSubmit)="guardarRol()" #rolForm="ngForm">
+
+  <div class="mb-3">
+    <label for="privilegio" class="form-label">Privilegio</label>
+    <input
+      type="text"
+      id="privilegio"
+      class="form-control"
+      required
+      [(ngModel)]="rol.privilegio"
+      name="privilegio"
+      #privilegio="ngModel"
+    />
+    <div *ngIf="privilegio.invalid && privilegio.touched" class="text-danger">
+      El privilegio es requerido.
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="rolForm.invalid">Guardar</button>
+
+</form>

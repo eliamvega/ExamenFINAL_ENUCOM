@@ -1,0 +1,9 @@
+package com.mx.UsuarioRol.DAO;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.mx.UsuarioRol.Dominio.Rol;
+
+public interface IRolDao extends JpaRepository<Rol, Integer> {
+    // idRol es Integer en Rol
+	 Rol findByPrivilegio(String privilegio);
+}

@@ -1,0 +1,18 @@
+package com.mx.RolService.Dominio;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.Data;
+
+@Entity
+@Data
+public class Rol {
+
+	@Id
+	@Column
+	private Integer idRol;
+	
+	@Column
+	private String privilegio;
+}

@@ -1,0 +1,25 @@
+spring.application.name=ApiGateway
+server.port=9000
+
+
+
+#CONEXION A BASE DE DATOS
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521/xe
+spring.datasource.username=ORCL
+spring.datasource.password=Curso2025
+spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+
+
+
+
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+
+
+spring.cloud.gateway.routes[0].id=UsuarioService
+spring.cloud.gateway.routes[0].uri=http://localhost:8001
+spring.cloud.gateway.routes[0].predicates=Path=/api/usuario/**
+
+spring.cloud.gateway.routes[1].id=RolService
+spring.cloud.gateway.routes[1].uri=http://localhost:8002
+spring.cloud.gateway.routes[1].predicates=Path=/api/rol/**

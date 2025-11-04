@@ -1,0 +1,4 @@
+INDEX VERSION 1.134+C:\Users\ElSipha\Desktop\Curso NUCOM 2025\SEMANA 1 POO\.metadata\.plugins\org.eclipse.jdt.core
+1387455045.index
+1865797976.index
+1786758958.index

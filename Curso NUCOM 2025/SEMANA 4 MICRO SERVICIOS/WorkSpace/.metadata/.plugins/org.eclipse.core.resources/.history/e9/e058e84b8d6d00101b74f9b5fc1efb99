@@ -1,0 +1,13 @@
+package com.mx.Accesorio.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class ConsolaServiceImp {
+
+	
+	@Autowired
+	private IConsolaRepository repository;
+}

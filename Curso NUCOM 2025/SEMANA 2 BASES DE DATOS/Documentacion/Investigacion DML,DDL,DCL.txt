@@ -1,0 +1,105 @@
+¿Qué es DML, DDL y DCL?
+Son categorías de sentencias SQL que se utilizan para interactuar con bases de datos:
+
+1. DML (Data Manipulation Language / Lenguaje de Manipulación de Datos)
+Permite consultar y modificar los datos dentro de las tablas.
+Incluye comandos como:
+
+SELECT – Recuperar datos.
+
+INSERT – Insertar nuevos datos.
+
+UPDATE – Modificar datos existentes.
+
+DELETE – Eliminar datos.
+
+EJEMPLO
+
+INSERT INTO empleados (nombre, puesto) VALUES ('Juan', 'Analista');
+
+
+
+
+
+
+
+2. DDL (Data Definition Language / Lenguaje de Definición de Datos)
+Sirve para definir o modificar la estructura de la base de datos (tablas, índices, vistas, etc.).
+Incluye comandos como:
+
+CREATE – Crear objetos (tablas, vistas, etc.).
+
+ALTER – Modificar objetos.
+
+DROP – Eliminar objetos.
+
+
+
+EJEMPLO
+
+CREATE TABLE empleados (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(50),
+    puesto VARCHAR(50)
+);
+
+
+
+
+
+
+
+3. DCL (Data Control Language / Lenguaje de Control de Datos)
+Permite gestionar los permisos y el acceso a los datos.
+Incluye comandos como:
+
+GRANT – Conceder permisos.
+
+REVOKE – Revocar permisos.
+
+
+EJEMPLO
+
+GRANT SELECT, INSERT ON empleados TO usuario1;
+
+
+
+
+¿Qué son las reglas de negocio?
+Las reglas de negocio son condiciones o restricciones definidas por una organización que deben cumplirse al manejar los datos o realizar procesos.
+
+Son independientes de la tecnología, pero deben reflejarse en el sistema.
+
+Se implementan en la lógica de la aplicación, la base de datos o ambas.
+
+👉 Ejemplos:
+
+Un cliente no puede hacer una compra si su saldo es cero.
+
+El sueldo de un empleado no puede ser menor al salario mínimo.
+
+La edad mínima para registrarse es 18 años.
+
+
+
+¿Qué son los constraints?
+Los constraints (restricciones) son reglas aplicadas directamente a las columnas de las tablas en una base de datos para garantizar la integridad de los datos.
+
+Tipos comunes de constraints:
+PRIMARY KEY – Identifica de forma única cada fila (no permite valores nulos ni repetidos).
+
+FOREIGN KEY – Establece una relación entre tablas (clave foránea).
+
+UNIQUE – Evita duplicados en una columna (puede aceptar un valor nulo).
+
+NOT NULL – Obliga a que una columna tenga un valor (no nulo).
+
+CHECK – Verifica que los valores cumplan una condición.
+
+👉 Ejemplo:
+
+CREATE TABLE productos (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    precio DECIMAL(10,2) CHECK (precio > 0)
+);

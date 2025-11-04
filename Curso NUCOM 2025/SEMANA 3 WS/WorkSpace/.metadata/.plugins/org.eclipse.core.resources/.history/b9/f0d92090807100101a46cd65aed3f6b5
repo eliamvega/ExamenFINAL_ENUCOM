@@ -1,0 +1,17 @@
+package com.mx.RolService.Feign;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.mx.RolService.DTO.UsuarioDTO;
+
+
+
+@FeignClient(name = "UsuarioService")
+public interface IRolFeign {
+
+	
+	@GetMapping("/api/usuario/{id}")
+	UsuarioDTO buscarUsuarioPorId(@PathVariable("id") Long id);
+}

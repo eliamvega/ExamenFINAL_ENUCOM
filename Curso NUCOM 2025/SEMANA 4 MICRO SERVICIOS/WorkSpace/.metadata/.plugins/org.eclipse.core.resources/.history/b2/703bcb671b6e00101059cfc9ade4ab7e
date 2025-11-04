@@ -1,0 +1,45 @@
+package com.mx.Accesorio.Service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import com.mx.Accesorio.Domain.Consola;
+import com.mx.Accesorio.Repository.IConsolaRepository;
+
+@Service
+public class ConsolaServiceImp implements IConsola {
+
+	
+	@Autowired
+	private IConsolaRepository repository;
+
+	@Override
+	public Consola guardar(Consola c) {
+		// TODO Auto-generated method stub
+		return repository.save(c);
+	}
+
+	@Override
+	public List<Consola> listar() {
+		// TODO Auto-generated method stub
+		return repository.findAll(Sort.by(Sort.Direction.ASC, "idConsola"));
+	}
+
+	@Override
+	public Consola buscar(int idConsola) {
+		// TODO Auto-generated method stub
+		return repository.findById(idConsola).orElse(null);
+	}
+
+	@Override
+	public void eliminar(int idConsola) {
+		repository.deleteById(idConsola);
+		
+	}
+	public Consola validacion(String nombre, String tipo) {
+		return repository.findByNombreIgnoringCaseContainingAndTipoIgnoringCaseContaining(nombre, tipo);
+}
+}

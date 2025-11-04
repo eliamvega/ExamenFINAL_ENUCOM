@@ -1,0 +1,41 @@
+package com.mx.Accesorio.Service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.mx.Accesorio.Domain.Consola;
+import com.mx.Accesorio.Repository.IConsolaRepository;
+
+@Service
+public class ConsolaServiceImp implements IConsola {
+
+	
+	@Autowired
+	private IConsolaRepository repository;
+
+	@Override
+	public Consola guardar(Consola c) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Consola> listar() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Consola buscar(int idConsola) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void eliminar(int idConsola) {
+		// TODO Auto-generated method stub
+		
+	}
+}

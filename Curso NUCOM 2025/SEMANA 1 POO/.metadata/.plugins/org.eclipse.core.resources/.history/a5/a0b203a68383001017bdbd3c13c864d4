@@ -1,0 +1,16 @@
+package Fibonacci;
+
+public class Fibonacci {
+public void main (String [] args) {
+	int n = 50;
+	int a = 0, b = 1;
+System.out.println("serie fibonacci");
+
+for (int i = 0; i < n; i ++) {
+	System.out.println(a + "");
+	int siguiente = a + b;
+	a = b;
+	b = siguiente;
+}
+}
+}

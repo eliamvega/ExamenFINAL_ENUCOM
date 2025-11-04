@@ -1,0 +1,70 @@
+package com.mx.Accesorio.Controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+
+import com.mx.Accesorio.Service.ConsolaServiceImp;
+
+
+
+@RestController
+@RequestMapping(path = "/consola")
+@CrossOrigin
+
+public class ConsolaWS {
+
+	
+	@Autowired
+	private ConsolaServiceImp service;
+	
+	//URI : http://localhost:8012/consola
+	
+	@GetMapping
+	public ResponseEntity<?> listar(){
+		List<Consola> consolas = service.listar();
+		return (consolas.isEmpty()) ? ResponseEntity.noContent().build() : ResponseEntity.ok(consolas);
+		
+	}
+	
+	@PostMapping
+	public ResponseEntity<?> guardar(@RequestBody Consola c){
+		Consola existe = service.validacion(c.getNombre(), c.getTipo());
+		if (existe != null) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+			} else {
+				existe = service.guardar(c);
+				return ResponseEntity.status(HttpStatus.CREATED).body(existe);
+			}
+	}
+	
+	@PutMapping
+	public ResponseEntity<?> editar(@RequestBody Consola c){
+	Consola actual = service.guardar(c);
+	return ResponseEntity.ok(actual);
+		
+	}
+	@DeleteMapping
+	public ResponseEntity<?> eliminar(@RequestParam int idConsola){
+		service.eliminar(idConsola);
+		return ResponseEntity.noContent().build();	
+		}
+		
+@GetMapping("buscar")
+public ResponseEntity<?> buscar(@RequestParam int idConsola){
+	Consola encontrado = service.buscar(idConsola);
+	return (encontrado != null) ? ResponseEntity.ok(encontrado) : ResponseEntity.notFound().build();
+}
+	}

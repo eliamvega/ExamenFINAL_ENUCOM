@@ -1,0 +1,31 @@
+package com.mx.Videojuego.Controller;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import com.mx.Videojuego.Dominio.Videojuego;
+import com.mx.Videojuego.Service.VideoJuegoServiceImp;
+
+public class VideojuegoWSTest {
+
+	
+	@Mock
+	private VideoJuegoServiceImp service;
+	
+	@InjectMocks
+	private VideojuegoWS controller;
+	
+	private Videojuego v;
+	
+	//crear un metodo que se va activar cada que se realizar una prueba unitaria
+	@BeforeEach
+	void setUp() {
+		MockitoAnnotations.openMocks(this);
+		v = new Videojuego();
+		v.setIdVideojuego(1);
+		v.setNombre("mario bros 3");
+	}
+	
+}

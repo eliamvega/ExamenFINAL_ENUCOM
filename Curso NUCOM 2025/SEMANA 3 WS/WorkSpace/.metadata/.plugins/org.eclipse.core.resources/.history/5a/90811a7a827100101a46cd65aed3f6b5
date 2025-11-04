@@ -1,0 +1,52 @@
+package com.mx.UsuarioService.Service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import com.mx.UsuarioService.Dominio.Usuario;
+import com.mx.UsuarioService.Repository.IUsuarioRepository;
+
+@Service
+public class UsuarioServiceImp implements IMetodos<Usuario> {
+
+	
+	@Autowired
+	private IUsuarioRepository repo;
+	
+	@Override
+	public Usuario guardar(Usuario u) {
+		
+		return repo.save(u);
+	}
+
+	@Override
+	public void editar(Usuario entidad) {
+		
+		repo.save(entidad);
+		
+		
+	}
+
+	@Override
+	public void eliminar(Usuario entidad) {
+		repo.delete(entidad);
+		
+	}
+
+	@Override
+	public List<Usuario> listar() {
+		return repo.findAll(Sort.by(Sort.Direction.ASC,"idUsuario"));
+	}
+
+	@Override
+	public Usuario buscar(Usuario entidad) {
+		if (entidad.getIdUsuario()!= null) {
+			return repo.findById(entidad.getIdUsuario()).orElse(null);
+		}
+		return null;
+	}
+
+}

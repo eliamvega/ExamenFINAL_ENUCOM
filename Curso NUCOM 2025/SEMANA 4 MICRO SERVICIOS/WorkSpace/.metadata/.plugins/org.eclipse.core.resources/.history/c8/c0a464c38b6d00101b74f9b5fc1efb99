@@ -1,0 +1,29 @@
+package com.mx.Accesorio.Service;
+
+import java.util.List;
+
+import com.mx.Accesorio.Domain.Accesorio;
+import com.mx.Accesorio.Domain.Consola;
+
+public interface IMetodos {
+	
+Consola guardar (Consola c);
+	
+	List<Consola> listar();
+	
+	Consola buscar (int idConsola);
+	
+	void eliminar (int idConsola);
+	
+	
+	Accesorio guardar (Accesorio a);
+	
+	List<Accesorio> listarA();
+	
+	Accesorio buscarA (int idAccesorio);
+	
+	void eliminarA (int idAccesorio );
+	
+	
+
+}

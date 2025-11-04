@@ -1,0 +1,74 @@
+🔗 ¿Qué son los JOINS en bases de datos?
+Los JOINS (uniones) se usan en SQL para combinar datos de dos o más tablas relacionadas, usando una columna en común (por ejemplo, un ID).
+
+📌 Imagina este escenario:
+Tabla LIBRO
+
+ID_LIBRO	TITULO	AUTOR_ID
+1	1984	101
+2	El Principito	102
+
+Tabla AUTOR
+
+ID_AUTOR	NOMBRE
+101	George Orwell
+102	Antoine de Saint-Exupéry
+
+Ahora queremos mostrar el título del libro y el nombre del autor.
+Para eso usamos un JOIN entre LIBRO y AUTOR.
+
+🧩 Tipos de JOINS principales:
+1. INNER JOIN – Solo trae coincidencias
+🔹 Muestra solo los registros que coinciden en ambas tablas.
+
+sql
+Copiar
+Editar
+SELECT L.TITULO, A.NOMBRE
+FROM LIBRO L
+INNER JOIN AUTOR A
+ON L.AUTOR_ID = A.ID_AUTOR;
+🟢 Resultado:
+
+TITULO	NOMBRE
+1984	George Orwell
+El Principito	Antoine de Saint-Exupéry
+
+2. LEFT JOIN (o LEFT OUTER JOIN) – Todo de la tabla izquierda
+🔹 Muestra todos los libros, aunque no tengan autor registrado.
+
+sql
+Copiar
+Editar
+SELECT L.TITULO, A.NOMBRE
+FROM LIBRO L
+LEFT JOIN AUTOR A
+ON L.AUTOR_ID = A.ID_AUTOR;
+Si algún libro no tiene AUTOR_ID registrado, el campo NOMBRE saldrá como NULL.
+
+3. RIGHT JOIN (o RIGHT OUTER JOIN) – Todo de la tabla derecha
+🔹 Muestra todos los autores, aunque no tengan libros registrados.
+
+sql
+Copiar
+Editar
+SELECT L.TITULO, A.NOMBRE
+FROM LIBRO L
+RIGHT JOIN AUTOR A
+ON L.AUTOR_ID = A.ID_AUTOR;
+4. FULL JOIN (FULL OUTER JOIN) – Todo de ambas tablas
+🔹 Trae todo, coincida o no. Si no hay coincidencia, rellena con NULL.
+
+sql
+Copiar
+Editar
+SELECT L.TITULO, A.NOMBRE
+FROM LIBRO L
+FULL JOIN AUTOR A
+ON L.AUTOR_ID = A.ID_AUTOR;
+✅ Resumen rápido:
+TIPO DE JOIN	¿QUÉ MUESTRA?
+INNER JOIN	Solo los que coinciden en ambas
+LEFT JOIN	Todos los de la izquierda + coincidencias
+RIGHT JOIN	Todos los de la derecha + coincidencias
+FULL JOIN	Todos de ambas tablas

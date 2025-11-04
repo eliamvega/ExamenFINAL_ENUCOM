@@ -1,0 +1,38 @@
+<div class="container" *ngIf="hijos && hijos.length">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Listado de hijos</h4>
+      <button type="button" class="btn btn-outline-info" (click)="nuevo()">Nuevo</button>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered border-primary">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>APELLIDO</th>
+            <th>EDAD</th>
+            <th>ID Padre</th>
+            <th>EDITAR</th>
+            <th>ELIMINAR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let hijo of hijos; trackBy: trackByHijoId">
+  <td>{{ hijo.idHijo }}</td>
+  <td>{{ hijo.nombre }}</td>
+  <td>{{ hijo.apellido }}</td>
+  <td>{{ hijo.edad }}</td>
+ <td>{{ hijo.padre?.nombre }} {{ hijo.padre?.apellido }}</td>
+  <td style="text-align: center;">
+    <button class="btn btn-warning" [routerLink]="['/editar-hijo', hijo.idHijo]">Editar</button>
+  </td>
+  <td style="text-align: center;">
+    <button class="btn btn-danger" (click)="eliminar(hijo.idHijo)">Eliminar</button>
+  </td>
+</tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

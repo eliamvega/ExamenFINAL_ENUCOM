@@ -1,0 +1,23 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Privilegio</th>
+       
+      <th scope="col">EDITAR</th>
+      <th scope="col">ELIMINAR</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (rol of roles; track rol.idRol){
+        <tr> 
+            <td>{{rol.idRol}}</td>
+            <td>{{rol.privilegio}}</td>
+            
+            <td><button type="button" class="btn btn-warning"(click)="irEditarRol(rol.idRol)"> EDITAR</button></td>
+            <td><button type="button" class="btn btn-danger" (click)="eliminarRol(rol.idRol)">ELIMINAR</button></td>
+        </tr>
+    }
+      
+  </tbody>
+</table>

@@ -1,0 +1,5 @@
+package com.mx.RolService.Repository;
+
+public interface IRolRepositoy {
+
+}

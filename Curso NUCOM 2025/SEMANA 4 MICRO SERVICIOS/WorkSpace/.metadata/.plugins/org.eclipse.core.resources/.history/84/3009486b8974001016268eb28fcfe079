@@ -1,0 +1,30 @@
+spring.application.name=ApiGateway
+
+server.port=9000
+
+#UN API GATEWAY ES UN PUNTO DE ENTRADA UNICO PARA TODAS LAS PETICIONES EXTERNAS A TU SISTEMA DE MS.
+#FUNCIONA COMO UN PROXY INTELIGENTE: REDIRECCION A LOS MS, APLICAR SEGURIDAD, BALANCEO DE CARGA, FILTRADO DE PETICONES, HACER LOGGING.
+
+
+#EUREKA
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+
+#CONFIGURAR EL ACCESO A LOS MS
+#VIDEOJUEGO
+spring.cloud.gateway.server.webmvc.routes[0].id=Videojuego
+spring.cloud.gateway.server.webmvc.routes[0].uri=http://loclahost:8014
+spring.cloud.gateway.server.webmvc.routes[0].predicates=Path=/v/**
+
+#DESARROLLADORA
+spring.cloud.gateway.server.webmvc.routes[1].id=Desarrolladora
+spring.cloud.gateway.server.webmvc.routes[1].uri=http://localhost:8010
+spring.cloud.gateway.server.webmvc.routes[1].predicates=Path=/desarrolladora/**
+
+#CONSOLA
+spring.cloud.gateway.server.webmvc.routes[2].id=Consola
+spring.cloud.gateway.server.webmvc.routes[2].uri=http://localhost:8012
+spring.cloud.gateway.server.webmvc.routes[2].predicates=Path=/consola/**
+
+#Accesorio
+#Categoria

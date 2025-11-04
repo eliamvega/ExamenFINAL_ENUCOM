@@ -1,0 +1,16 @@
+Miguel eliam rosas vega
+
+Las excepciones son eventos que ocurren en un programa que interrumpe el flujo normal
+de ejecucion o de compilacion.
+
+
+VERIFICADA : son las que son detectadas en timpo de ejecucion.
+NO VERIFICADAS : ocurren en tiempo de ejecuion.
+como se manejan?
+try {
+    // Código que puede causar una excepción
+} catch (TipoDeExcepcion e) {
+    // Código que maneja el error
+} finally {
+    // (opcional) Código que siempre se ejecuta, con o sin error
+}

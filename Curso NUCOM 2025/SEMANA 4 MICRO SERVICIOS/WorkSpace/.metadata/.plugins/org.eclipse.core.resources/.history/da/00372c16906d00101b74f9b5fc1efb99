@@ -1,0 +1,9 @@
+package com.mx.Accesorio.Repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.mx.Accesorio.Domain.Accesorio;
+
+public interface IAcessorioRepository extends JpaRepository<Accesorio, Integer>{
+
+}

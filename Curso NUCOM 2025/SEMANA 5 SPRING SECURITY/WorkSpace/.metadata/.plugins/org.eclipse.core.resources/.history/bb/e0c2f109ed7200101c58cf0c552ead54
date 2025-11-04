@@ -1,0 +1,5 @@
+package com.mx.Bicicleta.Dominio;
+
+public class Usuario {
+
+}

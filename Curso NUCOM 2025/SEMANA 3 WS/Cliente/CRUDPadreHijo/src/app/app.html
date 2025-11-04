@@ -1,0 +1,45 @@
+<main class="main">
+  <div class="content">
+    <div class="left-side">
+      <h1>Hello, {{ title }}</h1>
+      <p>Control de Padre e Hijos</p>
+    </div>
+
+    <div class="divider" role="separator" aria-label="Divider"></div>
+
+    <div class="right-side">
+      <div class="pill-group">
+        <!-- Botón para navegar a listar padres -->
+        <a routerLink="/listar" class="btn-videojuego">Listar padres</a>
+        <!-- Botón para navegar a listar hijos -->
+        <a routerLink="/listar-hijo" class="btn-videojuego">Listar hijos</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Aquí Angular carga los componentes según ruta -->
+<router-outlet></router-outlet>
+
+<style>
+  /* Contenedor de botones */
+  .pill-group {
+    display: flex;
+    gap: 12px; /* Espacio entre botones */
+  }
+
+  /* Estilo de los botones con clase btn-videojuego */
+  .btn-videojuego {
+    display: inline-block;
+    padding: 10px 18px;
+    background-color: #1e90ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  .btn-videojuego:hover {
+    background-color: #0d6efd;
+  }
+</style>

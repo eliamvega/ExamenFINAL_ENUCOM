@@ -1,0 +1,10 @@
+package com.mx.Accesorio.Repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.mx.Accesorio.Domain.Consola;
+
+public interface IConsolaRepository extends JpaRepository<Consola, Integer> {
+
+	Consola findByNombreIgnoringCaseContainingAndTipoIgnoringCaseContaining(String nombre, String tipo);
+}

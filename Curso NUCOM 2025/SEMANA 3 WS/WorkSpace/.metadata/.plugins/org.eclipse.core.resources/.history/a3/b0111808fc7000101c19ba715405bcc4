@@ -1,0 +1,5 @@
+package com.mx.RolService.Service;
+
+public interface RolServiceImp {
+
+}

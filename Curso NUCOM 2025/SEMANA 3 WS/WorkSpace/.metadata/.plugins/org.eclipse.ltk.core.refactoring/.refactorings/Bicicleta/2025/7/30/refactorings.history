@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;com.mx.BicicletaDAO&apos; to &apos;com.mx.Bicicleta.DAO&apos;&#x0D;&#x0A;- Original project: &apos;Bicicleta&apos;&#x0D;&#x0A;- Original element: &apos;Bicicleta/src/main/java/com.mx.BicicletaDAO&apos;&#x0D;&#x0A;- Renamed element: &apos;Bicicleta/src/main/java/com.mx.Bicicleta.DAO&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;com.mx.BicicletaDAO&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.mx.BicicletaDAO" name="com.mx.Bicicleta.DAO" qualified="false" references="true" stamp="1753126150608" textual="false" version="1.0"/>
+</session>

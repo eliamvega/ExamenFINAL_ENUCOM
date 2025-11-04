@@ -1,0 +1,5 @@
+package com.mx.UsuarioService.Dominio;
+
+public class Usuario {
+
+}

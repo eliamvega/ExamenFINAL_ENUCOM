@@ -1,0 +1,95 @@
+package com.mx.Videojuego.Controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mx.Videojuego.Dominio.Videojuego;
+import com.mx.Videojuego.Service.VideoJuegoServiceImp;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@RestController
+@RequestMapping(path ="/v")
+@Tag(name="Videojuegos", description = "microservicio para la gestion de los video juegos.")
+public class VideojuegoWS {
+	
+	
+	
+	//URI: http://localhost:8014/v
+	@Autowired
+	private VideoJuegoServiceImp service;
+	//LISTAR -----------------> http://localhost:8014/v/listar
+	@Operation(summary = "Listar videojuegos", description = "obtener todos los videojuegos ordenados por Id de la base de datos ")
+	@GetMapping(value = "/listar")
+	public ResponseEntity<?> listar(){
+		List<Videojuego> v = service.listar();
+		 return (v.isEmpty()) ? ResponseEntity.noContent().build() : ResponseEntity.ok(v);
+		 
+	}
+	
+	//GUARDAR ------------------> http://localhost:8014/v/guardar
+	@Operation(summary = "crear videojuegos", description = "se guarda un nuevo videojuego en la base de datos que recibe como parametro y devuelve un status 201 si")
+	@PostMapping(value = "/guardar")
+	public ResponseEntity<?> guardar(@RequestBody Videojuego v){
+		Videojuego nuevo = service.guardar(v);
+		return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
+		
+	}
+	
+	//EDITAR -------------------> http://localhost:8014/v/editar
+	@Operation(summary = "actualizar videojuego", description = "se recibe como parametro un videojuego y si su ID existe en la base de datos se sustituye por el anterior ")
+	@PutMapping(value = "/editar")
+	public ResponseEntity<?> editar(@RequestBody Videojuego v){
+		Videojuego actual = service.guardar(v);
+		return ResponseEntity.ok(actual);
+	}
+	
+	//ELIMINAR ------------------>http://localhost:8014/v/eliminar/5
+	@Operation(summary = "eliminar videojuegoss", description = "se elimina un videojuego de la base de datos por medio de su id, dando como respuesta un status NO_CONTENT")
+	@DeleteMapping(value = "eliminar/{idVideojuego}")
+	public ResponseEntity<?> eliminar(@PathVariable int idVideojuego){
+	service.eliminar(idVideojuego);
+	return ResponseEntity.noContent().build();
+	}
+
+	
+	//buscar -------------> http://localhost:8014/v/buscar
+	@Operation(summary = "buscar video juegos por id ", description = "se busca video juegos por su id en la base de datos ")
+	@PostMapping(value = "/buscar")
+	public ResponseEntity<?> buscar(@RequestParam int idVideojuego){
+	Videojuego encontrado = service.buscar(idVideojuego);
+	return (encontrado == null) ? ResponseEntity.notFound().build() : ResponseEntity.ok(encontrado);
+	
+	}
+	
+	//por categoria ------------------------------> http://localhost:8014/v/categoria/2
+	@Operation(summary ="buscar videojuego por categoria", description = "se busa el video juego por la categoria segun pertenezca")
+	@GetMapping(value = "/categoria/{categoriaId}")
+	public ResponseEntity<?> porCategoria(@PathVariable int categoriaId){
+		List<Videojuego> v = service.porCategoria(categoriaId);
+		return (v.isEmpty()) ? ResponseEntity.noContent().build() : ResponseEntity.ok(v);
+			
+	}
+	
+	//por desarrolladora ------------------> http://localhost:8014/v/des
+	@Operation(summary = "buscar videojuegos por desarroladora", description = "se buscar por el video juego por el id de desarroladora en desarroladora")
+	@GetMapping(value = "/des")
+	public ResponseEntity<?> porDesarrolladora(@RequestParam int desarrolladoraId){
+		List<Videojuego> v = service.porDesarrolladora(desarrolladoraId);
+		return  ResponseEntity.ok(v);
+	}
+}

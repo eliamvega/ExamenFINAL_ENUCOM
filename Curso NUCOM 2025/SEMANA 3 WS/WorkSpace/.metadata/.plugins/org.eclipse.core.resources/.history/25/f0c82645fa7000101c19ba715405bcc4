@@ -1,0 +1,5 @@
+package com.mx.RolService.Dominio;
+
+public class Rol {
+
+}

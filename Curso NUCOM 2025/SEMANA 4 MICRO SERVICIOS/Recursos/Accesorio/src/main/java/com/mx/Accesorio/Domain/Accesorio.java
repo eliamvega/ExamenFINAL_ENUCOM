@@ -1,0 +1,38 @@
+package com.mx.Accesorio.Domain;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Entity
+@Table
+//lombok: que es una biblioteca que genera codigo repetitivo de manera automatica
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+public class Accesorio {
+	
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int idAccesorio;
+	private String nombre;
+	private String tipo;
+	private String color;
+	private String marca;
+	private int idConsola;
+	
+}

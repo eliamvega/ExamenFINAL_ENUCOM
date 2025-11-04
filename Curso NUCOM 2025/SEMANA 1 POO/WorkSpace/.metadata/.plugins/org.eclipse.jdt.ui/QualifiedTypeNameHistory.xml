@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="com.mx.Videojuego.Videojuego"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="java.io.BufferedReader"/>
+    <fullyQualifiedTypeName name="java.lang.ArithmeticException"/>
+    <fullyQualifiedTypeName name="com.mx.Excepcion.EdadInvalidadException"/>
+    <fullyQualifiedTypeName name="java.lang.RuntimeException"/>
+    <fullyQualifiedTypeName name="com.mx.Principal.LenguajeInvalidoException"/>
+    <fullyQualifiedTypeName name="com.mx.Principal.IndiceInvalidoException"/>
+    <fullyQualifiedTypeName name="com.mx.HashMap.Televisor"/>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="com.mx.HashMap.Implementacion"/>
+</qualifiedTypeNameHistroy>

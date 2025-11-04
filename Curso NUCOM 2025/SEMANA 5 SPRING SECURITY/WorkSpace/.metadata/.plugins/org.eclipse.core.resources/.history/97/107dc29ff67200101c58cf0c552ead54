@@ -1,0 +1,9 @@
+package com.mx.Bicicleta.DAO;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.mx.Bicicleta.Dominio.Usuario;
+
+public interface UsuarioDao extends JpaRepository<Usuario, String >{
+
+}

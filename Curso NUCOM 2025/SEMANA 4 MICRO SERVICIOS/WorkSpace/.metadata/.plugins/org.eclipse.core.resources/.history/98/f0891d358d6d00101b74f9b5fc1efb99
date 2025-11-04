@@ -1,0 +1,5 @@
+package com.mx.Accesorio.Service;
+
+public interface IConsola {
+
+}
