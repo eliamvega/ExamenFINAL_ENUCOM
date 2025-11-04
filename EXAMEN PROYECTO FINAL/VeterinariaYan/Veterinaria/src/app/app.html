@@ -1,0 +1,31 @@
+
+
+
+<main class="main">
+  <div class="content">
+    <div class="left-side">
+     
+      <h1>Hello, {{ title() }}</h1>
+      <p>Congratulations! Your app is running. 🎉</p>
+    </div>
+    <div class="divider" role="separator" aria-label="Divider"></div>
+    <div class="right-side">
+   <button (click)="listar()">Listar Veterinaria</button>
+   <button (click)="listarR()">Listar Responsable</button>
+   <button (click)=" listarM()">Listar Mascotas</button>
+   <button (click)="listarC()">Listar clientes</button>
+      
+    </div>
+  </div>
+</main>
+
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+
+<router-outlet />

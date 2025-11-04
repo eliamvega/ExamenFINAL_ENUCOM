@@ -1,0 +1,109 @@
+<!-- Formulario de edición -->
+<div *ngIf="mostrarFormularioEditar && mascotaSeleccionada" class="card mb-3 p-3 border">
+  <h5>Editar Mascota</h5>
+  <div class="mb-3">
+    <label>Nombre</label>
+    <input type="text" class="form-control" [(ngModel)]="mascotaSeleccionada.nombre" name="nombre">
+  </div>
+  <div class="mb-3">
+    <label>Raza</label>
+    <input type="text" class="form-control" [(ngModel)]="mascotaSeleccionada.raza" name="raza">
+  </div>
+  <div class="mb-3">
+    <label>Edad</label>
+    <input type="number" class="form-control" [(ngModel)]="mascotaSeleccionada.edad" name="edad">
+  </div>
+  <div class="mb-3">
+    <label>Razón de Cita</label>
+    <input type="text" class="form-control" [(ngModel)]="mascotaSeleccionada.razonCita" name="razonCita">
+  </div>
+  <div class="mb-3">
+    <label>ID Cliente</label>
+    <input type="number" class="form-control" [(ngModel)]="mascotaSeleccionada.clienteId" name="clienteId">
+  </div>
+  <div class="mb-3">
+    <label>ID Responsable</label>
+    <input type="number" class="form-control" [(ngModel)]="mascotaSeleccionada.responsableId" name="responsableId">
+  </div>
+  <div class="mb-3">
+    <label>ID Veterinaria</label>
+    <input type="number" class="form-control" [(ngModel)]="mascotaSeleccionada.veterinariaId" name="veterinariaId">
+  </div>
+
+  <button class="btn btn-primary" (click)="guardarEdicion()">Guardar</button>
+  <button class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+</div>
+
+
+<!-- Botón para mostrar/ocultar formulario -->
+<button class="btn btn-success mb-3" (click)="toggleFormulario()">
+  {{ mostrarFormulario ? 'Cancelar' : 'Agregar Nueva Mascota' }}
+</button>
+
+<!-- Formulario de nueva mascota -->
+<div *ngIf="mostrarFormulario" class="card mb-3 p-3 border">
+  <div class="mb-3">
+    <label>Nombre</label>
+    <input type="text" class="form-control" [(ngModel)]="nuevaMascota.nombre" name="nombre">
+  </div>
+  <div class="mb-3">
+    <label>Raza</label>
+    <input type="text" class="form-control" [(ngModel)]="nuevaMascota.raza" name="raza">
+  </div>
+  <div class="mb-3">
+    <label>Edad</label>
+    <input type="number" class="form-control" [(ngModel)]="nuevaMascota.edad" name="edad">
+  </div>
+  <div class="mb-3">
+    <label>Razon de la Cita</label>
+    <input type="text" class="form-control" [(ngModel)]="nuevaMascota.razonCita" name="razonCita">
+  </div>
+  <div class="mb-3">
+    <label>ID de Cliente</label>
+    <input type="number" class="form-control" [(ngModel)]="nuevaMascota.clienteId" name="clienteId">
+  </div>
+  <div class="mb-3">
+    <label>ID de Responsable</label>
+    <input type="number" class="form-control" [(ngModel)]="nuevaMascota.responsableId" name="responsableId">
+  </div>
+  <div class="mb-3">
+    <label>ID de Veterinaria</label>
+    <input type="number" class="form-control" [(ngModel)]="nuevaMascota.veterinariaId" name="veterinariaId">
+  </div>
+  <button class="btn btn-primary" (click)="agregarMascota()">Guardar</button>
+</div>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID MASCOTA</th>
+      <th>NOMBRE</th>
+      <th>RAZA</th>
+      <th>EDAD</th>
+      <th>RAZÓN CITA</th>
+      <th>CLIENTE</th>
+      <th>RESPONSABLE</th>
+       <th>VETERINARIA</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    @for (mascota of mascotas; track mascota.idMascota) {
+      <tr>
+        <td>{{ mascota.idMascota }}</td>
+        <td>{{ mascota.nombre }}</td>
+        <td>{{ mascota.raza }}</td>
+        <td>{{ mascota.edad }}</td>
+        <td>{{ mascota.razonCita }}</td>
+        <td>{{ mascota.clienteId }}</td>
+        <td>{{ mascota.responsableId }}</td>
+        <td>{{ mascota.veterinariaId }}</td>
+        <td>
+          <button type="button" class="btn btn-dark" (click)="editarMascota(mascota)">EDITAR</button>
+          <button type="button" class="btn btn-danger" (click)="eliminarM(mascota)">ELIMINAR</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

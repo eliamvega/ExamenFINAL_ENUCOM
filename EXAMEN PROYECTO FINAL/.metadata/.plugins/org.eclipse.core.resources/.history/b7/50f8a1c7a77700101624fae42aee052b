@@ -1,0 +1,51 @@
+package com.mx.Cliente.Service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+
+import com.mx.Cliente.Dominio.Cliente;
+import com.mx.Cliente.Repository.IClienteRepository;
+
+public class IClienteServiceImp implements IMetodos<Cliente> {
+
+	
+	@Autowired
+	private IClienteRepository repo;
+	
+	
+	
+	
+	@Override
+	public Cliente guardar(Cliente c) {
+		return repo.save(c);
+	}
+
+	@Override
+	public void editar(Cliente entidad) {
+		 repo.save(entidad);
+		
+	}
+
+	@Override
+	public void eliminar(Cliente entidad) {
+		repo.delete(entidad);
+		
+	}
+
+	@Override
+	public List<Cliente> listar() {
+		// TODO Auto-generated method stub
+		return repo.findAll(Sort.by(Sort.Direction.ASC,"idCliente"));
+	}
+
+	@Override
+	public Cliente buscar(Cliente entidad) {
+	if (entidad.getIdcliente() != null) {
+		return repo.findById(entidad.getIdcliente()).orElse(null);
+	}
+	return null;
+	}
+
+}

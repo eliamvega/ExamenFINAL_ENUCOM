@@ -1,0 +1,74 @@
+<!-- Formulario de edición -->
+<div *ngIf="mostrarFormularioEditar && responsableSeleccionado" class="card mb-3 p-3 border">
+  <h5>Editar Responsable</h5>
+  <div class="mb-3">
+    <label>Nombre</label>
+    <input type="text" class="form-control" [(ngModel)]="responsableSeleccionado.nombre" name="nombre">
+  </div>
+  <div class="mb-3">
+    <label>Contacto</label>
+    <input type="number" class="form-control" [(ngModel)]="responsableSeleccionado.contacto" name="contacto">
+  </div>
+  <div class="mb-3">
+    <label>ID Veterinaria</label>
+    <input type="number" class="form-control" [(ngModel)]="responsableSeleccionado.veterinariaId" name="veterinariaId">
+  </div>
+  <button class="btn btn-primary" (click)="guardarEdicion()">Guardar</button>
+  <button class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+</div>
+
+
+<!-- Botón para mostrar/ocultar formulario -->
+<button class="btn btn-success mb-3" (click)="toggleFormulario()">
+  {{ mostrarFormulario ? 'Cancelar' : 'Agregar Nuevo Responsable' }}
+</button>
+
+<!-- Formulario de nuevo responsable -->
+<div *ngIf="mostrarFormulario" class="card mb-3 p-3 border">
+  <div class="mb-3">
+    <label>Nombre</label>
+    <input type="text" class="form-control" [(ngModel)]="nuevoResponsable.nombre" name="nombre">
+  </div>
+  <div class="mb-3">
+    <label>Contacto</label>
+    <input type="text" class="form-control" [(ngModel)]="nuevoResponsable.contacto" name="contacto">
+  </div>
+  <div class="mb-3">
+    <label>ID de Veterinaria</label>
+    <input type="number" class="form-control" [(ngModel)]="nuevoResponsable.veterinariaId" name="veterinariaId">
+  </div>
+  <button class="btn btn-primary" (click)="agregarResponsable()">Guardar</button>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID RESPONSABLE</th>
+      <th scope="col">NOMBRE</th>
+      <th scope="col">CONTACTO</th>
+      <th scope="col">ID DE VETERINARIA</th>
+     
+    </tr>
+  </thead>
+  <tbody>
+    @for (responsable of responsables; track responsable.idResponsable) {
+      <tr>
+        <td>{{ responsable.idResponsable }}</td>
+        <td>{{ responsable.nombre }}</td>
+        <td>{{ responsable.contacto }}</td>
+        <td>{{ responsable.veterinariaId }}</td>
+        <td>
+          <button type="button" class="btn btn-dark" (click)="editarResponsable(responsable)">EDITAR</button>
+        </td>
+        <td>
+          <button 
+            type="button" 
+            class="btn btn-danger" 
+            (click)="eliminarR(responsable)">
+            ELIMINAR
+          </button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

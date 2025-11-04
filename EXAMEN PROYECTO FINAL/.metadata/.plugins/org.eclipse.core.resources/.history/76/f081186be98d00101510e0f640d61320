@@ -1,0 +1,15 @@
+package com.mx.Veterinaria.FeignClient;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+//paso 2 coneccion 
+	@FeignClient(name = "cliente", url = "http://localhost:8070/api/cliente")
+public interface ClienteFeignClient {
+
+	
+
+		
+		
+		
+	}
+

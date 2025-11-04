@@ -1,0 +1,69 @@
+<!-- Formulario de edición -->
+<div *ngIf="mostrarFormularioEditar && clienteSeleccionado" class="card mb-3 p-3 border">
+  <h5>Editar Cliente</h5>
+  <div class="mb-3">
+    <label>Nombre</label>
+    <input type="text" class="form-control" [(ngModel)]="clienteSeleccionado.nombre" name="nombre">
+  </div>
+  <div class="mb-3">
+    <label>Dirección</label>
+    <input type="text" class="form-control" [(ngModel)]="clienteSeleccionado.direccion" name="direccion">
+  </div>
+  <div class="mb-3">
+    <label>Contacto</label>
+    <input type="number" class="form-control" [(ngModel)]="clienteSeleccionado.contacto" name="contacto">
+  </div>
+
+  <button class="btn btn-primary" (click)="guardarEdicion()">Guardar</button>
+  <button class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+</div>
+
+
+<!-- Botón para mostrar/ocultar formulario -->
+<button class="btn btn-success mb-3" (click)="toggleFormulario()">
+  {{ mostrarFormulario ? 'Cancelar' : 'Agregar Nuevo Cliente' }}
+</button>
+
+<!-- Formulario de nuevo cliente -->
+<div *ngIf="mostrarFormulario" class="card mb-3 p-3 border">
+  <div class="mb-3">
+    <label>Nombre</label>
+    <input type="text" class="form-control" [(ngModel)]="nuevoCliente.nombre" name="nombre">
+  </div>
+  <div class="mb-3">
+    <label>Dirección</label>
+    <input type="text" class="form-control" [(ngModel)]="nuevoCliente.direccion" name="direccion">
+  </div>
+  <div class="mb-3">
+    <label>Contacto</label>
+    <input type="number" class="form-control" [(ngModel)]="nuevoCliente.contacto" name="contacto">
+  </div>
+  <button class="btn btn-primary" (click)="agregarCliente()">Guardar</button>
+</div>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID CLIENTE</th>
+      <th scope="col">NOMBRE</th>
+      <th scope="col">DIRECCION</th>
+      <th scope="col">CONTACTO</th>
+     
+    </tr>
+  </thead>
+  <tbody>
+    @for (cliente of clientes; track cliente.idCliente) {
+      <tr>
+        <td>{{ cliente.idCliente }}</td>
+        <td>{{ cliente.nombre }}</td>
+        <td>{{ cliente.direccion }}</td>
+        <td>{{ cliente.contacto }}</td>
+        <td>
+          <button type="button" class="btn btn-dark" (click)="editarCliente(cliente)">EDITAR</button>
+          <button type="button" class="btn btn-danger" (click)="eliminarC(cliente)">ELIMINAR</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

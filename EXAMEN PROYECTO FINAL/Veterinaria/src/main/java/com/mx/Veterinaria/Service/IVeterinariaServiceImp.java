@@ -1,0 +1,105 @@
+package com.mx.Veterinaria.Service;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import com.mx.Veterinaria.DTO.Cliente;
+import com.mx.Veterinaria.DTO.Mascota;
+import com.mx.Veterinaria.DTO.Responsable;
+import com.mx.Veterinaria.Dominio.Veterinaria;
+import com.mx.Veterinaria.FeignClient.ClienteFeignClient;
+import com.mx.Veterinaria.FeignClient.MascotaFeignClient;
+import com.mx.Veterinaria.FeignClient.ResponsableFeingClient;
+import com.mx.Veterinaria.Repository.IVeterinariaRepository;
+
+@Service
+public class IVeterinariaServiceImp implements IMetodos<Veterinaria> {
+	
+	@Autowired
+	private IVeterinariaRepository repo;
+
+	@Override
+	public Veterinaria guardar(Veterinaria v) {
+		return repo.save(v);
+	}
+
+	@Override
+	public void editar(Veterinaria entidad) {
+		
+		repo.save(entidad);
+		
+		
+	}
+
+	@Override
+	public void eliminar(Veterinaria entidad) {
+		repo.delete(entidad);
+		
+	}
+
+	@Override
+	public List<Veterinaria> listar() {
+		
+		return repo.findAll(Sort.by(Sort.Direction.ASC,"idVeterinaria"));
+	}
+
+	@Override
+	public Veterinaria buscar(Veterinaria entidad) {
+		if (entidad.getIdVeterinaria() != null) {
+			return repo.findById(entidad.getIdVeterinaria()).orElse (null);
+		}
+		return null;
+	}
+	//paso implementamos el feing  4
+	//falta traer los datos de responsable aqui se puede hacer o bien en el controlador 
+	@Autowired
+	private ResponsableFeingClient rep;
+
+	@Autowired
+	private ClienteFeignClient clienteFeign;
+
+	@Autowired
+	private MascotaFeignClient mascotaFeign; // ✅ Nuevo FeignClient
+
+	public List<Responsable> obtenerResponsables(int veterinariaId) {
+	    return rep.listarV(veterinariaId);
+	}
+
+	public HashMap<String, Object> detalleVeterinaria(Integer idVeterinaria) {
+	    HashMap<String, Object> response = new HashMap<>();
+
+	    // Traer la veterinaria
+	    Veterinaria veterinaria = repo.findById(idVeterinaria).orElse(null);
+	    if (veterinaria == null) {
+	        response.put("mensaje", "No existe veterinaria con ID " + idVeterinaria);
+	        return response;
+	    }
+
+	    // Traer responsables vía Feign
+	    List<Responsable> responsables = rep.listarV(idVeterinaria);
+
+	    // Traer clientes vía Feign
+	    List<Cliente> clientes = clienteFeign.listarC(idVeterinaria);
+
+	    // Traer mascotas vía Feign ✅
+	    List<Mascota> mascotas = mascotaFeign.listarM(idVeterinaria);
+
+	    response.put("veterinaria", veterinaria);
+	    response.put("responsables", responsables);
+	    response.put("clientes", clientes);
+	    response.put("mascotas", mascotas);
+
+	    return response;
+	}
+
+
+	
+
+}
+	
+

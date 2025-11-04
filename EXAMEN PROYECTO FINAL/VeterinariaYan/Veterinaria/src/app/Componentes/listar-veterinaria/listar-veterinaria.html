@@ -1,0 +1,68 @@
+<!-- Formulario de edición -->
+<div *ngIf="mostrarFormularioEditar && veterinariaSeleccionada" class="card mb-3 p-3 border">
+  <h5>Editar Veterinaria</h5>
+  <div class="mb-3">
+    <label>Nombre</label>
+    <input type="text" class="form-control" [(ngModel)]="veterinariaSeleccionada.nombre" name="nombre">
+  </div>
+  <div class="mb-3">
+    <label>Dirección</label>
+    <input type="text" class="form-control" [(ngModel)]="veterinariaSeleccionada.direccion" name="direccion">
+  </div>
+  <div class="mb-3">
+    <label>Teléfono</label>
+    <input type="text" class="form-control" [(ngModel)]="veterinariaSeleccionada.telefono" name="telefono">
+  </div>
+  <button class="btn btn-primary" (click)="guardarEdicion()">Guardar</button>
+  <button class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+</div>
+
+
+<!-- Botón para mostrar/ocultar formulario -->
+<button class="btn btn-success mb-3" (click)="toggleFormulario()">
+  {{ mostrarFormulario ? 'Cancelar' : 'Agregar Nueva Veterinaria' }}
+</button>
+
+<!-- Formulario de nueva veterinaria -->
+<div *ngIf="mostrarFormulario" class="card mb-3 p-3 border">
+  <div class="mb-3">
+    <label>Nombre</label>
+    <input type="text" class="form-control" [(ngModel)]="nuevaVeterinaria.nombre" name="nombre">
+  </div>
+  <div class="mb-3">
+    <label>Dirección</label>
+    <input type="text" class="form-control" [(ngModel)]="nuevaVeterinaria.direccion" name="direccion">
+  </div>
+  <div class="mb-3">
+    <label>Teléfono</label>
+    <input type="text" class="form-control" [(ngModel)]="nuevaVeterinaria.telefono" name="telefono">
+  </div>
+  <button class="btn btn-primary" (click)="agregarVeterinaria()">Guardar</button>
+</div>
+
+<!-- Tabla de veterinarias -->
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID VETERINARIA</th>
+      <th>NOMBRE</th>
+      <th>DIRECCIÓN</th>
+      <th>TELÉFONO</th>
+      <th>ACCIONES</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (veterinaria of veterinarias; track veterinaria.idVeterinaria) {
+      <tr>
+        <td>{{ veterinaria.idVeterinaria }}</td>
+        <td>{{ veterinaria.nombre }}</td>
+        <td>{{ veterinaria.direccion }}</td>
+        <td>{{ veterinaria.telefono }}</td>
+        <td>
+          <button class="btn btn-dark" (click)="editarVeterinaria(veterinaria)">EDITAR</button>
+          <button class="btn btn-danger" (click)="eliminarV(veterinaria)">ELIMINAR</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

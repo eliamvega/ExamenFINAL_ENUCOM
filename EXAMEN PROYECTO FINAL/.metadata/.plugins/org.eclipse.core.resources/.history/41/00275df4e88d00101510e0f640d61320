@@ -1,0 +1,11 @@
+package com.mx.Veterinaria.FeignClient;
+
+public interface ClienteFeignClient {
+
+	//paso 2 coneccion 
+	@FeignClient(name = "cliente", url = "http://localhost:8070/api/cliente")
+	public interface ClienteFeignClient {
+		
+	}
+
+}
