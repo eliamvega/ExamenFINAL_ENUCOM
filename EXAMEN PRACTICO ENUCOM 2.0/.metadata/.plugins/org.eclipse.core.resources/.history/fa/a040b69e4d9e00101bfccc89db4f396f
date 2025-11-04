@@ -1,0 +1,16 @@
+package com.mx.Area.FeignClient;
+
+import java.util.List;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+//paso 3
+
+@FeignClient(name = "area", url = "http://localhost:8060/api/area")
+public interface AreaFeignClient {
+
+	@GetMapping("/Area")
+	public List<Area> listarA(@RequestParam("areaId") int areaId);
+}

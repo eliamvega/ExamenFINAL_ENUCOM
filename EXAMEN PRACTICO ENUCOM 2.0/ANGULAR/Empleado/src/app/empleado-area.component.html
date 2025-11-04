@@ -1,0 +1,96 @@
+
+
+<h2>Empleados</h2>
+<button (click)="listarEmpleados()">Listar</button>
+<button (click)="eliminarTodosEmpleados()">Eliminar Todos</button>
+
+<button (click)="mostrarFormEmpleado = !mostrarFormEmpleado">Agregar Empleado</button>
+<form *ngIf="mostrarFormEmpleado" #empleadoForm="ngForm" (ngSubmit)="onSubmitEmpleado()">
+  <label>Nombre:</label>
+  <input [(ngModel)]="empleadoEdit.nombre" name="nombre" required />
+  <label>ID Área:</label>
+  <input [(ngModel)]="empleadoEdit.areaId" name="areaId" required />
+  <button type="submit">Crear</button>
+  <button type="button" (click)="resetEmpleadoForm(); mostrarFormEmpleado = false">Cancelar</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>Empleado ID</th>
+      <th>Nombre</th>
+      <th>Área ID</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let empleado of empleados">
+      <td>{{ empleado.empleadoId }}</td>
+      <td>{{ empleado.nombre }}</td>
+      <td>{{ empleado.areaId }}</td>
+      <td>
+        <button (click)="setEmpleadoEdit(empleado)">Editar</button>
+        <button (click)="eliminarEmpleado(empleado.empleadoId)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Tabla para empleados de área seleccionada -->
+<div *ngIf="areaEmpleados && areaEmpleados.area">
+  <h3>Área seleccionada</h3>
+  <div style="margin-bottom: 1rem;">
+    <strong>ID Área:</strong> {{ areaEmpleados.area.idArea }}<br>
+    <strong>Nombre:</strong> {{ areaEmpleados.area.nombre }}
+  </div>
+  <h4>Empleados</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Área ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of areaEmpleados.empleados">
+        <td>{{ emp.nombre }}</td>
+        <td>{{ emp.areaId }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Áreas</h2>
+<button (click)="listarAreas()">Listar</button>
+<button (click)="eliminarTodosAreas()">Eliminar Todos</button>
+<button (click)="mostrarFormArea = !mostrarFormArea">Agregar Área</button>
+<form *ngIf="mostrarFormArea" #areaForm="ngForm" (ngSubmit)="onSubmitArea()">
+  <label>Nombre:</label>
+  <input [(ngModel)]="areaEdit.nombre" name="nombre" required />
+  <button type="submit">Crear</button>
+  <button type="button" (click)="resetAreaForm(); mostrarFormArea = false">Cancelar</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+  <th>ID</th>
+  <th>Nombre</th>
+  <th>Acciones</th>
+  <th>Empleados</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let area of areas">
+      <td>{{ area.idArea }}</td>
+      <td>{{ area.nombre }}</td>
+      <td>
+        <button (click)="setAreaEdit(area)">Editar</button>
+        <button (click)="eliminarArea(area.idArea)">Eliminar</button>
+      </td>
+      <td>
+        <button (click)="listarEmpleadosPorArea(area)">Listar con empleados</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

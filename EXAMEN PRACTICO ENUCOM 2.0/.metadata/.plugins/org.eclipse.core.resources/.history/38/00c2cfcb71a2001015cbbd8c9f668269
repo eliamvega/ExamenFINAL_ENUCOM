@@ -1,0 +1,134 @@
+package com.mx.Empleado.Controller;
+
+import java.util.List;
+import java.util.regex.Pattern;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.mx.Empleado.Dominio.Empleado;
+import com.mx.Empleado.Service.EmpleadoServiceImp;
+
+@RestController
+@RequestMapping(path = "api/empleado")
+public class EmpleadoWS {
+
+    @Autowired
+    private EmpleadoServiceImp service;
+
+    // LISTAR TODOS
+    @GetMapping
+    public List<Empleado> listar() {
+        return service.listar();
+    }
+
+    // BUSCAR POR ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Empleado> buscar(@PathVariable Integer id) {
+        Empleado emp = new Empleado();
+        emp.setIdEmpleado(id);
+        Empleado encontrado = service.buscar(emp);
+        if (encontrado != null) {
+            return ResponseEntity.ok(encontrado);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // GUARDAR NUEVO ✅ con validaciones
+    @PostMapping
+    public ResponseEntity<?> guardar(@RequestBody Empleado empleado) {
+
+        // VALIDACIONES
+        String error = validarEmpleado(empleado);
+        if (error != null) {
+            return ResponseEntity.badRequest().body("❌ Error: " + error);
+        }
+
+        Empleado guardado = service.guardar(empleado);
+        return ResponseEntity.ok(guardado);
+    }
+
+    // EDITAR ✅ con validaciones
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editar(@PathVariable Integer id, @RequestBody Empleado empleado) {
+        Empleado existente = service.buscar(new Empleado() {{
+            setIdEmpleado(id);
+        }});
+
+        if (existente == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // VALIDACIONES
+        String error = validarEmpleado(empleado);
+        if (error != null) {
+            return ResponseEntity.badRequest().body("❌ Error: " + error);
+        }
+
+        empleado.setIdEmpleado(id); // asegurar que actualiza el correcto
+        service.editar(empleado);
+        return ResponseEntity.ok(empleado);
+    }
+
+    // ELIMINAR POR ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminar(@PathVariable Integer id) {
+        Empleado emp = new Empleado();
+        emp.setIdEmpleado(id);
+        Empleado existente = service.buscar(emp);
+        if (existente != null) {
+            service.eliminar(existente);
+            return ResponseEntity.ok("✅ Empleado eliminado");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // ELIMINAR TODOS
+    @DeleteMapping
+    public ResponseEntity<String> eliminarTodos() {
+        service.listar().forEach(service::eliminar);
+        return ResponseEntity.ok("✅ Todos los empleados fueron eliminados");
+    }
+
+    // FILTRAR POR ÁREA
+    @GetMapping("/Area")
+    public ResponseEntity<List<Empleado>> listarA(@RequestParam int areaId) {
+        List<Empleado> A = service.buscarArea(areaId);
+        return ResponseEntity.ok(A);
+    }
+
+    // 🔎 Método privado para validaciones
+    private String validarEmpleado(Empleado e) {
+        if (e.getNombre() == null || e.getNombre().trim().isEmpty()) {
+            return "El nombre es obligatorio.";
+        }
+        if (e.getApellido() == null || e.getApellido().trim().isEmpty()) {
+            return "El apellido es obligatorio.";
+        }
+        if (e.getEdad() == null || e.getEdad() <= 0) {
+            return "La edad debe ser mayor a 0.";
+        }
+        if (e.getSalario() == null || e.getSalario() < 0) {
+            return "El salario no puede ser negativo.";
+        }
+        if (e.getCorreo() == null || !validarCorreo(e.getCorreo())) {
+            return "El correo no es válido.";
+        }
+        if (e.getFechaNacimiento() == null) {
+            return "La fecha de nacimiento es obligatoria.";
+        }
+        if (e.getRol() == null) {
+            return "Debe asignarse un rol al empleado.";
+        }
+        return null; // ✅ Todo correcto
+    }
+
+    // 📧 Validación de formato de correo
+    private boolean validarCorreo(String correo) {
+        String regex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+        return Pattern.compile(regex).matcher(correo).matches();
+    }
+}

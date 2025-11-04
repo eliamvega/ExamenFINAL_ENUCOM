@@ -1,0 +1,61 @@
+package com.mx.Area.Service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import com.mx.Area.DTO.Empleado;
+import com.mx.Area.Dominio.Area;
+import com.mx.Area.FeignClient.EmpleadoFeignClient;
+import com.mx.Area.Repository.IAreaRepository;
+@Service
+public class IAreaServiceImp implements IMetodos<Area> {
+
+	
+	@Autowired
+	private IAreaRepository repo;
+	
+	@Override
+	public Area guardar(Area a) {
+		
+		return repo.save(a);
+	}
+
+	@Override
+	public void editar(Area entidad) {
+		repo.save(entidad);
+		
+	}
+
+	@Override
+	public void eliminar(Area entidad) {
+		repo.delete(entidad);
+		
+	}
+
+	@Override
+	public List<Area> listar() {
+		
+		return repo.findAll(Sort.by(Sort.Direction.ASC,"idArea"));
+	}
+
+	@Override
+	public Area buscar(Area entidad) {
+		if (entidad.getIdArea() !=null) {
+			return repo.findById(entidad.getIdArea()).orElse(null);
+		}
+		return null;
+	}
+	//paso 4 implementamos feign
+	
+	@Autowired
+	private EmpleadoFeignClient rep;
+	
+	public List<Empleado> obtenerEmpleados(int areaId){
+		return rep.listarA(areaId);
+	}
+	
+
+}

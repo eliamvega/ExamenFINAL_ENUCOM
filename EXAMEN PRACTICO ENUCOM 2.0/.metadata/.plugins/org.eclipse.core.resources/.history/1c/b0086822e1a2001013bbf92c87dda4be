@@ -1,0 +1,132 @@
+package com.mx.Area.Controller;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.mx.Area.Dominio.Area;
+import com.mx.Area.Service.IAreaServiceImp;
+
+@RestController
+@RequestMapping(path = "api/area")
+public class AreaWS {
+
+    @Autowired
+    private IAreaServiceImp service;
+
+    // LISTAR TODOS
+    @GetMapping
+    public ResponseEntity<List<Area>> listar() {
+        List<Area> lista = service.listar();
+        if (lista.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(lista);
+    }
+
+    // BUSCAR POR ID
+    @GetMapping("/{id}")
+    public ResponseEntity<?> buscar(@PathVariable Integer id) {
+        if (id == null || id <= 0) {
+            return ResponseEntity.badRequest().body("❌ El ID debe ser un número positivo.");
+        }
+        Area are = new Area();
+        are.setIdArea(id);
+        Area encontrado = service.buscar(are);
+        if (encontrado != null) {
+            return ResponseEntity.ok(encontrado);
+        } else {
+            return ResponseEntity.status(404).body("❌ Área no encontrada con ID: " + id);
+        }
+    }
+
+    // GUARDAR NUEVO
+    @PostMapping
+    public ResponseEntity<?> guardar(@RequestBody Area area) {
+        // Validaciones de campos obligatorios
+        if (area == null) {
+            return ResponseEntity.badRequest().body("❌ El cuerpo de la solicitud no puede estar vacío.");
+        }
+        if (area.getNombre() == null || area.getNombre().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("❌ El nombre del área es obligatorio.");
+        }
+        if (area.getDescripcion() == null || area.getDescripcion().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("❌ La descripción del área es obligatoria.");
+        }
+
+        // Guardar área
+        Area guardada = service.guardar(area);
+        return ResponseEntity.ok(guardada);
+    }
+
+    // EDITAR
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editar(@PathVariable Integer id, @RequestBody Area area) {
+        if (id == null || id <= 0) {
+            return ResponseEntity.badRequest().body("❌ El ID debe ser un número positivo.");
+        }
+        Area existente = service.buscar(new Area() {{
+            setIdArea(id);
+        }});
+        if (existente == null) {
+            return ResponseEntity.status(404).body("❌ No se encontró el área con ID: " + id);
+        }
+
+        // Validaciones de campos obligatorios
+        if (area.getNombre() == null || area.getNombre().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("❌ El nombre del área es obligatorio.");
+        }
+        if (area.getDescripcion() == null || area.getDescripcion().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("❌ La descripción del área es obligatoria.");
+        }
+
+        // Actualizar
+        area.setIdArea(id); // asegurar que actualiza la correcta
+        service.editar(area);
+        return ResponseEntity.ok(area);
+    }
+
+    // ELIMINAR POR ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Integer id) {
+        if (id == null || id <= 0) {
+            return ResponseEntity.badRequest().body("❌ El ID debe ser un número positivo.");
+        }
+        Area are = new Area();
+        are.setIdArea(id);
+        Area existente = service.buscar(are);
+        if (existente != null) {
+            service.eliminar(existente);
+            return ResponseEntity.ok("✅ Área eliminada correctamente.");
+        } else {
+            return ResponseEntity.status(404).body("❌ Área no encontrada con ID: " + id);
+        }
+    }
+
+    // ELIMINAR TODOS
+    @DeleteMapping
+    public ResponseEntity<String> eliminarTodos() {
+        List<Area> lista = service.listar();
+        if (lista.isEmpty()) {
+            return ResponseEntity.status(404).body("❌ No hay áreas para eliminar.");
+        }
+        lista.forEach(service::eliminar);
+        return ResponseEntity.ok("✅ Todas las áreas fueron eliminadas correctamente.");
+    }
+
+    // NUEVO ENDPOINT: AREA + EMPLEADOS
+    @GetMapping("/{id}/empleados")
+    public ResponseEntity<?> getAreaConEmpleados(@PathVariable Integer id) {
+        if (id == null || id <= 0) {
+            return ResponseEntity.badRequest().body("❌ El ID debe ser un número positivo.");
+        }
+        Map<String, Object> resultado = service.obtenerAreaConEmpleadosMap(id);
+        if (resultado == null || resultado.isEmpty()) {
+            return ResponseEntity.status(404).body("❌ No se encontró información para el área con ID: " + id);
+        }
+        return ResponseEntity.ok(resultado);
+    }
+}

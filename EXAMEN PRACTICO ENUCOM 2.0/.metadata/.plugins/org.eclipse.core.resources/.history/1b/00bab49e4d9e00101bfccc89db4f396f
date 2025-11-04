@@ -1,0 +1,10 @@
+package com.mx.Area.FeignClient;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+//paso 3
+
+@FeignClient(name = "empleado", url = "http://localhost:8060/api/empleado")
+public interface AreaFeignClient {
+
+}

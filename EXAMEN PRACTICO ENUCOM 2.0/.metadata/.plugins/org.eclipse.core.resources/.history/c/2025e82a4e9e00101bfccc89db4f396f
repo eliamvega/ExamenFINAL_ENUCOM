@@ -1,0 +1,5 @@
+package com.mx.Area.FeignClient;
+
+public interface EmpleadoFeignClient {
+
+}
